@@ -15,16 +15,25 @@ templates:
     self.${id}.set_property('length',       ${fft_length})
     self.${id}.set_property('direction',    ${fft_direction.val})
     self.${id}.set_property('magnitude',    ${fft_magnitude.val})
-    self.${id}.set_property('fft_scaling',  ${fft_scaling})
     self.${id}.set_property('shift_config', ${fft_shift_config.val})
+    if ${version} == 2:
+        self.${id}.set_property('fft_scaling_factor', ${fft_scaling_factor})
+    else:
+        self.${id}.set_property('fft_scaling', ${fft_scaling})
   callbacks:
     - set_property('length', ${fft_length})
     - set_property('direction', ${fft_direction.val})
     - set_property('magnitude', ${fft_magnitude.val})
     - set_property('fft_scaling', ${fft_scaling})
+    - set_property('fft_scaling_factor', ${fft_scaling_factor})
     - set_property('shift_config', ${fft_shift_config.val})
 
 parameters:
+- id: version
+  label: FFT Block Version
+  dtype: int
+  default: 2
+  hide: ${ 'part' }
 - id: num_chans
   label: Number of Channels
   dtype: int
@@ -76,8 +85,13 @@ parameters:
 - id: fft_scaling
   label: FFT Scaling Schedule
   dtype: int
-  default: 1706
+  default: ${ 1706 if version == 1 else 0}
   hide: part
+- id: fft_scaling_factor
+  label: FFT Scaling Factor
+  dtype: float
+  default: ${ 1.0/fft_length }
+  hide: ${ 'part' if version == 2 else 'all'}
 
 inputs:
 - domain: rfnoc
