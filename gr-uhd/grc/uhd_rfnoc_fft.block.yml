@@ -1,5 +1,6 @@
 id: uhd_rfnoc_fft
 label: RFNoC Fast Fourier Transform (FFT) Block
+category: '[Core]/UHD/RFNoC/Blocks'
 
 templates:
   imports: |-
