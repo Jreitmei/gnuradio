@@ -12,10 +12,13 @@ templates:
         "FFT",
         ${device_select},
         ${instance_index})
-    self.${id}.set_property('length',       ${fft_length})
-    self.${id}.set_property('direction',    ${fft_direction.val})
-    self.${id}.set_property('magnitude',    ${fft_magnitude.val})
+    self.${id}.set_property('length', ${fft_length})
+    self.${id}.set_property('direction', ${fft_direction.val})
+    self.${id}.set_property('magnitude', ${fft_magnitude.val})
     self.${id}.set_property('shift_config', ${fft_shift_config.val})
+    self.${id}.set_property('bypass_mode', ${fft_bypass_mode}, typename='bool')
+    self.${id}.set_property('cp_insertion_list', ${fft_cp_insertion_list})
+    self.${id}.set_property('cp_removal_list', ${fft_cp_removal_list})
     if ${version} == 2:
         self.${id}.set_property('fft_scaling_factor', ${fft_scaling_factor})
     else:
@@ -27,6 +30,9 @@ templates:
     - set_property('fft_scaling', ${fft_scaling})
     - set_property('fft_scaling_factor', ${fft_scaling_factor})
     - set_property('shift_config', ${fft_shift_config.val})
+    - set_property('bypass_mode', ${fft_bypass_mode}, typename='bool')
+    - set_property('cp_insertion_list', ${fft_cp_insertion_list})
+    - set_property('cp_removal_list', ${fft_cp_removal_list})
 
 parameters:
 - id: version
@@ -92,6 +98,21 @@ parameters:
   dtype: float
   default: ${ 1.0/fft_length }
   hide: ${ 'part' if version == 2 else 'all'}
+- id: fft_bypass_mode
+  label: FFT Bypass Mode
+  dtype: bool
+  default: 'False'
+  options: ['True', 'False']
+- id: fft_cp_insertion_list
+  label: 'Cyclic Prefix Insertion List'
+  dtype: int_vector
+  default: [0]
+  hide: ${ 'part' }
+- id: fft_cp_removal_list
+  label: 'Cyclic Prefix Removal List'
+  dtype: int_vector
+  default: [0]
+  hide: ${ 'part' }
 
 inputs:
 - domain: rfnoc
