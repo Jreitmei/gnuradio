@@ -27,14 +27,14 @@ namespace {
         return static_cast<rfnoc_fft::fft_direction>(dir);
     }
 
-    ::uhd::rfnoc::fft_magnitude fft_magnitude_gr2u(rfnoc_fft::magnitude mag)
+    ::uhd::rfnoc::fft_magnitude fft_magnitude_gr2u(rfnoc_fft::fft_magnitude mag)
     {
         return static_cast<::uhd::rfnoc::fft_magnitude>(mag);
     }
     
-    rfnoc_fft::magnitude fft_magnitude_u2gr(::uhd::rfnoc::fft_magnitude mag)
+    rfnoc_fft::fft_magnitude fft_magnitude_u2gr(::uhd::rfnoc::fft_magnitude mag)
     {
-        return static_cast<rfnoc_fft::magnitude>(mag);
+        return static_cast<rfnoc_fft::fft_magnitude>(mag);
     }
 
     ::uhd::rfnoc::fft_shift fft_shift_gr2u(rfnoc_fft::fft_shift shift)
@@ -118,14 +118,13 @@ void rfnoc_fft_impl::set_shift_config(const rfnoc_fft::fft_shift shift)
 void rfnoc_fft_impl::set_shift_config(const std::string& shift)
 {
     if (shift == "NORMAL") {
-        d_fft_ref->set_magnitude(::uhd::rfnoc::fft_magnitude::COMPLEX);
+        d_fft_ref->set_shift_config(::uhd::rfnoc::fft_shift::NORMAL);
     } else if (shift == "REVERSE") {
-        d_fft_ref->set_magnitude(::uhd::rfnoc::fft_magnitude::MAGNITUDE);
+        d_fft_ref->set_shift_config(::uhd::rfnoc::fft_shift::REVERSE);
     } else if (shift == "NATURAL") {
-        d_fft_ref->set_magnitude(::uhd::rfnoc::fft_magnitude::MAGNITUDE_SQUARED);
-
-    } else if (magnitude == "BIT_REVERSE") {
-        d_fft_ref->set_magnitude(::uhd::rfnoc::fft_magnitude::MAGNITUDE);
+        d_fft_ref->set_shift_config(::uhd::rfnoc::fft_shift::NATURAL);
+    } else if (shift == "BIT_REVERSE") {
+        d_fft_ref->set_shift_config(::uhd::rfnoc::fft_shift::BIT_REVERSE);
     } else {
         throw std::runtime_error(fmt::format(
             "FFT shift configuration ({:s}) is not [NORMAL, REVERSE, NATURAL, BIT_REVERSE]", 
@@ -200,93 +199,96 @@ std::string rfnoc_fft_impl::get_magnitude_string() const
     }
 }
 
-    // FFT Scaling Factor
-    void rfnoc_fft_impl::set_scaling_factor(const double factor)
-    {
-        d_fft_ref->set_scaling_factor(factor);
-    }
+// FFT Scaling Factor
+void rfnoc_fft_impl::set_scaling_factor(const double factor)
+{
+    d_fft_ref->set_scaling_factor(factor);
+}
 
-    // FFT Scaling
-    void rfnoc_fft_impl::set_scaling(const uint32_t scaling)
-    {
-        d_fft_ref->set_scaling(scaling);
-    }
+// FFT Scaling
+void rfnoc_fft_impl::set_scaling(const uint32_t scaling)
+{
+    d_fft_ref->set_scaling(scaling);
+}
 
-    uint32_t rfnoc_siggen_impl::get_scaling()
-    {
-        return d_fft_ref->get_scaling();
-    }
+uint32_t rfnoc_fft_impl::get_scaling() const
+{
+    return d_fft_ref->get_scaling();
+}
 
-    //FFT Length
-    void rfnoc_fft_impl::set_length(const uint32_t length)
-    {
-        d_fft_ref->set_length(length);
-    }
+// FFT Length
+void rfnoc_fft_impl::set_length(const uint32_t length)
+{
+    d_fft_ref->set_length(length);
+}
 
-    uint32_t rfnoc_fft_impl::get_length() const
-    {
-        return d_fft_ref->get_length();
-    }
+uint32_t rfnoc_fft_impl::get_length() const
+{
+    return d_fft_ref->get_length();
+}
 
-    // FFT Bypass Mode
-    void rfnoc_fft_impl::set_bypass_mode(const bool bypass)
-    {
-        d_fft_ref->set_bypass_mode(bypass);
-    }
+// FFT Bypass Mode
+void rfnoc_fft_impl::set_bypass_mode(const bool bypass)
+{
+    d_fft_ref->set_bypass_mode(bypass);
+}
 
-    bool rfnoc_fft_impl::get_bypass_mode()
-    {
-        return d_fft_ref->get_bypass_mode();
-    }
+bool rfnoc_fft_impl::get_bypass_mode() const
+{
+    return d_fft_ref->get_bypass_mode();
+}
 
-    // NIPC
-    uint32_t rfnoc_fft_impl::get_nipc() 
-    {
-        return d_fft_ref->get_nipc();
-    }
+// NIPC
+uint32_t rfnoc_fft_impl::get_nipc() const
+{
+    return d_fft_ref->get_nipc();
+}
 
-    // Max Length
-    uint32_t rfnoc_fft_impl::get_max_length() 
-    {
-        return d_fft_ref->get_max_length();
-    }
-    // Max CP Length
-    uint32_t rfnoc_fft_impl::get_max_cp_length() 
-    {
-        return d_fft_ref->get_max_cp_length();
-    }
-    // Max CP Removal List Length
-    uint32_t get_max_cp_removal_list_length() 
-    {
-        return d_fft_ref->get_max_cp_removal_list_length();
-    }
+// Max Length
+uint32_t rfnoc_fft_impl::get_max_length() const
+{
+    return d_fft_ref->get_max_length();
+}
 
-    // Max CP Insertion List Length
-    uint32_t get_max_cp_insertion_list_length() 
-    {
-        return d_fft_ref->get_max_cp_insertion_list_length();
-    }
+// Max CP Length
+uint32_t rfnoc_fft_impl::get_max_cp_length() const
+{
+    return d_fft_ref->get_max_cp_length();
+}
 
-    // CP Insertion List
-    void rfnoc_fft_impl::set_cp_insertion_list(const std::vector<uint32_t>& cp_lengths)
-    {
-        d_fft_ref->set_cp_insertion_list(cp_lengths);
-    }
+// Max CP Removal List Length
+uint32_t rfnoc_fft_impl::get_max_cp_removal_list_length() const
+{
+    return d_fft_ref->get_max_cp_removal_list_length();
+}
 
-    std::vector<uint32_t> rfnoc_fft_impl::get_cp_insertion_list() const
-    {
-        return d_fft_ref->get_cp_insertion_list();
-    }
+// Max CP Insertion List Length
+uint32_t rfnoc_fft_impl::get_max_cp_insertion_list_length() const
+{
+    return d_fft_ref->get_max_cp_insertion_list_length();
+}
 
-    // CP Removal List
-    void rfnoc_fft_impl::set_cp_removal_list(const std::vector<uint32_t>& cp_lengths)
-    {
-        d_fft_ref->set_cp_removal_list(cp_lengths);
-    }
-    std::vector<uint32_t> rfnoc_fft_impl::get_cp_removal_list() const
-    {
-        return d_fft_ref->get_cp_removal_list();
-    }
+// CP Insertion List
+void rfnoc_fft_impl::set_cp_insertion_list(const std::vector<uint32_t> cp_lengths)
+{
+    d_fft_ref->set_cp_insertion_list(cp_lengths);
+}
 
-    } // namespace uhd
+std::vector<uint32_t> rfnoc_fft_impl::get_cp_insertion_list() const
+{
+    return d_fft_ref->get_cp_insertion_list();
+}
+
+// CP Removal List
+void rfnoc_fft_impl::set_cp_removal_list(const std::vector<uint32_t> cp_lengths)
+{
+    d_fft_ref->set_cp_removal_list(cp_lengths);
+}
+
+std::vector<uint32_t> rfnoc_fft_impl::get_cp_removal_list() const
+{
+    return d_fft_ref->get_cp_removal_list();
+}
+
+} // namespace uhd
 } // namespace gr

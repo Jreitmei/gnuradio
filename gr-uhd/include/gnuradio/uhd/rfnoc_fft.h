@@ -48,7 +48,7 @@ public:
 
     /*! Set the FFT direction using a string
      *
-     * \param type  The FFT direction to choose ["REVERSE", "FORWARD"];
+     * \param direction  The FFT direction to choose ["REVERSE", "FORWARD"];
      */
     virtual void set_direction(const std::string& direction) = 0;
 
@@ -74,7 +74,7 @@ public:
 
     /*! Set the magnitude using a string
      *
-     * \param type  The magnitude to choose ["COMPLEX", "MAGNITUDE", "MAGNITUDE_SQUARED"]
+     * \param magnitude  The magnitude to choose ["COMPLEX", "MAGNITUDE", "MAGNITUDE_SQUARED"]
      */
     virtual void set_magnitude(const std::string& magnitude) = 0;
 
@@ -100,7 +100,7 @@ public:
 
     /*! Set the shift configuration of the output FFT data using a string
      *
-     * \param type  The shift configuration to choose ["NORMAL", "REVERSE", "NATURAL", "BIT_REVERSE"]
+     * \param shift  The shift configuration to choose ["NORMAL", "REVERSE", "NATURAL", "BIT_REVERSE"]
      */
     virtual void set_shift_config(const std::string& shift) = 0;
 
@@ -200,7 +200,7 @@ public:
 
     /*! Gets the values from the cyclic prefix insertion list.
      *
-     * \param cp_lengths The cyclic prefix lengths to be written to the list
+     * \returns The cyclic prefix insertion list
      */
     virtual std::vector<uint32_t> get_cp_insertion_list() const = 0;
 
@@ -212,7 +212,7 @@ public:
 
     /*! Gets the values from the cyclic prefix removal list.
      *
-     * \param cp_lengths The cyclic prefix lengths to be written to the list
+     * \returns The cyclic prefix removal list
      */
     virtual std::vector<uint32_t> get_cp_removal_list() const = 0;
 };

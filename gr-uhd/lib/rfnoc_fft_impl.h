@@ -38,7 +38,7 @@ public:
 
     void set_scaling_factor(const double scaling_factor) override;
 
-    void set_scaling(const uint32_t scaling) const override;
+    void set_scaling(const uint32_t scaling) override;
     uint32_t get_scaling() const override;
 
     void set_length(const uint32_t length) override;
@@ -46,10 +46,6 @@ public:
 
     void set_bypass_mode(const bool bypass) override;
     bool get_bypass_mode() const override;
-
-
-    void set_fft_scaling(const double scaling) override;
-    double get_fft_scaling() const override;
 
     uint32_t get_nipc() const override;
 

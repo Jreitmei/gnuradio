@@ -520,43 +520,145 @@ blocks:
     coordinate: [648, 728.0]
     rotation: 0
     state: enabled
+- name: uhd_fpga_fft_0
+  id: uhd_fpga_fft
+  parameters:
+    CP_INSERTION_REPEAT: '1'
+    CP_REMOVAL_REPEAT: '1'
+    EN_FFT_BYPASS: '0'
+    EN_FFT_ORDER: '1'
+    EN_MAGNITUDE: '1'
+    EN_MAGNITUDE_SQ: '1'
+    MAX_CP_LIST_LEN_INS_LOG2: '5'
+    MAX_CP_LIST_LEN_REM_LOG2: '5'
+    MAX_FFT_SIZE_LOG2: '12'
+    NUM_CORES: '1'
+    NUM_PORTS: '1'
+    USE_APPROX_MAG: '1'
+    affinity: ''
+    alias: ''
+    comment: ''
+    desc: fft.yml
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: block
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [656, 840.0]
+    rotation: 0
+    state: enabled
+- name: uhd_fpga_fft_0_0
+  id: uhd_fpga_fft
+  parameters:
+    CP_INSERTION_REPEAT: '1'
+    CP_REMOVAL_REPEAT: '1'
+    EN_FFT_BYPASS: '0'
+    EN_FFT_ORDER: '1'
+    EN_MAGNITUDE: '1'
+    EN_MAGNITUDE_SQ: '1'
+    MAX_CP_LIST_LEN_INS_LOG2: '5'
+    MAX_CP_LIST_LEN_REM_LOG2: '5'
+    MAX_FFT_SIZE_LOG2: '12'
+    NUM_CORES: '1'
+    NUM_PORTS: '1'
+    USE_APPROX_MAG: '1'
+    affinity: ''
+    alias: ''
+    comment: ''
+    desc: fft.yml
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: block
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [656, 960.0]
+    rotation: 0
+    state: enabled
+- name: uhd_fpga_sep_0
+  id: uhd_fpga_sep
+  parameters:
+    affinity: ''
+    alias: ''
+    buff_size_bytes: '32768'
+    comment: ''
+    ctrl: Auto
+    data: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: sep
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [640, 904.0]
+    rotation: 180
+    state: enabled
+- name: uhd_fpga_sep_0_0
+  id: uhd_fpga_sep
+  parameters:
+    affinity: ''
+    alias: ''
+    buff_size_bytes: '32768'
+    comment: ''
+    ctrl: Auto
+    data: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: sep
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [640, 1024.0]
+    rotation: 180
+    state: enabled
 
 connections:
-- [uhd_fpga_01_sep0, out0, uhd_fpga_02_6uc0, in_]
-- [uhd_fpga_02_6uc0, out_, uhd_fpga_02_radio0, in_0]
-- [uhd_fpga_05_device_none2, term_out, uhd_fpga_02_radio0, in_1]
-- [uhd_fpga_02_radio0, out_0, uhd_fpga_02_ddc0, in_0]
-- [uhd_fpga_02_ddc0, out_0, uhd_fpga_01_sep0, in0]
-- [uhd_fpga_02_radio0, out_1, uhd_fpga_02_ddc0, in_1]
-- [uhd_fpga_02_ddc0, out_1, uhd_fpga_01_sep1, in0]
-- [uhd_fpga_01_sep2, out0, uhd_fpga_03_6uc1, in_]
-- [uhd_fpga_01_sep1, out0, uhd_fpga_05_device_none0, term_in]
-- [uhd_fpga_03_6uc1, out_, uhd_fpga_03_radio1, in_0]
-- [uhd_fpga_05_device_none3, term_out, uhd_fpga_03_radio1, in_1]
-- [uhd_fpga_03_radio1, out_0, uhd_fpga_03_ddc1, in_0]
-- [uhd_fpga_03_ddc1, out_0, uhd_fpga_01_sep2, in0]
-- [uhd_fpga_03_radio1, out_1, uhd_fpga_03_ddc1, in_1]
-- [uhd_fpga_03_ddc1, out_1, uhd_fpga_01_sep3, in0]
-- [uhd_fpga_01_sep3, out0, uhd_fpga_05_device_none1, term_in]
-- [uhd_fpga_01_sep4, out0, uhd_fpga_04_replay0, in_0]
-- [uhd_fpga_04_replay0, out_0, uhd_fpga_01_sep4, in0]
-- [uhd_fpga_01_sep5, out0, uhd_fpga_04_replay0, in_1]
-- [uhd_fpga_04_replay0, out_1, uhd_fpga_01_sep5, in0]
-- [uhd_fpga_02_radio0, ctrlport, uhd_fpga_00_device_bsp_0, ctrlport_radio0]
-- [uhd_fpga_03_radio1, ctrlport, uhd_fpga_00_device_bsp_0, ctrlport_radio1]
+- [uhd_fpga_00_device_bsp_0, ce_clk, uhd_fpga_02_6uc0, ce_clk]
+- [uhd_fpga_00_device_bsp_0, ce_clk, uhd_fpga_02_ddc0, ce_clk]
+- [uhd_fpga_00_device_bsp_0, ce_clk, uhd_fpga_03_6uc1, ce_clk]
+- [uhd_fpga_00_device_bsp_0, ce_clk, uhd_fpga_03_ddc1, ce_clk]
+- [uhd_fpga_00_device_bsp_0, ce_clk, uhd_fpga_fft_0, ce_clk]
+- [uhd_fpga_00_device_bsp_0, ce_clk, uhd_fpga_fft_0_0, ce_clk]
+- [uhd_fpga_00_device_bsp_0, dram_clk, uhd_fpga_04_replay0, mem_clk]
 - [uhd_fpga_00_device_bsp_0, radio0, uhd_fpga_02_radio0, radio]
 - [uhd_fpga_00_device_bsp_0, radio1, uhd_fpga_03_radio1, radio]
+- [uhd_fpga_00_device_bsp_0, radio_clk, uhd_fpga_02_radio0, radio_clk]
+- [uhd_fpga_00_device_bsp_0, radio_clk, uhd_fpga_03_radio1, radio_clk]
 - [uhd_fpga_00_device_bsp_0, time, uhd_fpga_02_radio0, time]
 - [uhd_fpga_00_device_bsp_0, time, uhd_fpga_03_radio1, time]
+- [uhd_fpga_01_sep0, out0, uhd_fpga_02_6uc0, in_]
+- [uhd_fpga_01_sep1, out0, uhd_fpga_05_device_none0, term_in]
+- [uhd_fpga_01_sep2, out0, uhd_fpga_03_6uc1, in_]
+- [uhd_fpga_01_sep3, out0, uhd_fpga_05_device_none1, term_in]
+- [uhd_fpga_01_sep4, out0, uhd_fpga_04_replay0, in_0]
+- [uhd_fpga_01_sep5, out0, uhd_fpga_04_replay0, in_1]
+- [uhd_fpga_02_6uc0, out_, uhd_fpga_02_radio0, in_0]
+- [uhd_fpga_02_ddc0, out_0, uhd_fpga_01_sep0, in0]
+- [uhd_fpga_02_ddc0, out_1, uhd_fpga_01_sep1, in0]
+- [uhd_fpga_02_radio0, ctrlport, uhd_fpga_00_device_bsp_0, ctrlport_radio0]
+- [uhd_fpga_02_radio0, out_0, uhd_fpga_02_ddc0, in_0]
+- [uhd_fpga_02_radio0, out_1, uhd_fpga_02_ddc0, in_1]
+- [uhd_fpga_03_6uc1, out_, uhd_fpga_03_radio1, in_0]
+- [uhd_fpga_03_ddc1, out_0, uhd_fpga_01_sep2, in0]
+- [uhd_fpga_03_ddc1, out_1, uhd_fpga_01_sep3, in0]
+- [uhd_fpga_03_radio1, ctrlport, uhd_fpga_00_device_bsp_0, ctrlport_radio1]
+- [uhd_fpga_03_radio1, out_0, uhd_fpga_03_ddc1, in_0]
+- [uhd_fpga_03_radio1, out_1, uhd_fpga_03_ddc1, in_1]
 - [uhd_fpga_04_replay0, axi_ram, uhd_fpga_00_device_bsp_0, dram]
-- [uhd_fpga_00_device_bsp_0, radio_clk, uhd_fpga_02_radio0, radio_clk]
-- [uhd_fpga_00_device_bsp_0, ce_clk, uhd_fpga_02_ddc0, ce_clk]
-- [uhd_fpga_00_device_bsp_0, ce_clk, uhd_fpga_02_6uc0, ce_clk]
-- [uhd_fpga_00_device_bsp_0, radio_clk, uhd_fpga_03_radio1, radio_clk]
-- [uhd_fpga_00_device_bsp_0, ce_clk, uhd_fpga_03_ddc1, ce_clk]
-- [uhd_fpga_00_device_bsp_0, ce_clk, uhd_fpga_03_6uc1, ce_clk]
-- [uhd_fpga_00_device_bsp_0, dram_clk, uhd_fpga_04_replay0, mem_clk]
+- [uhd_fpga_04_replay0, out_0, uhd_fpga_01_sep4, in0]
+- [uhd_fpga_04_replay0, out_1, uhd_fpga_01_sep5, in0]
+- [uhd_fpga_05_device_none2, term_out, uhd_fpga_02_radio0, in_1]
+- [uhd_fpga_05_device_none3, term_out, uhd_fpga_03_radio1, in_1]
+- [uhd_fpga_fft_0, out_, uhd_fpga_sep_0, in0]
+- [uhd_fpga_fft_0_0, out_, uhd_fpga_sep_0_0, in0]
+- [uhd_fpga_sep_0, out0, uhd_fpga_fft_0, in_]
+- [uhd_fpga_sep_0_0, out0, uhd_fpga_fft_0_0, in_]
 
 metadata:
   file_format: 1
-  grc_version: v3.11.0.0git-800-g032de57b
+  grc_version: v3.11.0.0git-946-g79c3df96
