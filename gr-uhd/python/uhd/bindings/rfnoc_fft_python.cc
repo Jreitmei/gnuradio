@@ -31,6 +31,25 @@ void bind_rfnoc_fft(py::module& m)
 {
 
     using rfnoc_fft = ::gr::uhd::rfnoc_fft;
+    
+    // Expose enums to Python
+    py::enum_<rfnoc_fft::fft_direction>(m, "fft_direction")
+        .value("REVERSE", rfnoc_fft::fft_direction::REVERSE)
+        .value("FORWARD", rfnoc_fft::fft_direction::FORWARD)
+        .export_values();
+
+    py::enum_<rfnoc_fft::fft_magnitude>(m, "fft_magnitude")
+        .value("COMPLEX", rfnoc_fft::fft_magnitude::COMPLEX)
+        .value("MAGNITUDE", rfnoc_fft::fft_magnitude::MAGNITUDE)
+        .value("MAGNITUDE_SQUARED", rfnoc_fft::fft_magnitude::MAGNITUDE_SQUARED)
+        .export_values();
+
+    py::enum_<rfnoc_fft::fft_shift>(m, "fft_shift")
+        .value("NORMAL", rfnoc_fft::fft_shift::NORMAL)
+        .value("REVERSE", rfnoc_fft::fft_shift::REVERSE)
+        .value("NATURAL", rfnoc_fft::fft_shift::NATURAL)
+        .value("BIT_REVERSE", rfnoc_fft::fft_shift::BIT_REVERSE)
+        .export_values();
 
 
     py::class_<rfnoc_fft,

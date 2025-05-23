@@ -6,33 +6,32 @@ templates:
   imports: |-
     from gnuradio import uhd
   make: |-
-    uhd.rfnoc_block_generic(
+    uhd.rfnoc_fft(
         self.rfnoc_graph,
         uhd.device_addr(${block_args}),
-        "FFT",
         ${device_select},
         ${instance_index})
-    self.${id}.set_property('length', ${fft_length})
-    self.${id}.set_property('direction', ${fft_direction.val})
-    self.${id}.set_property('magnitude', ${fft_magnitude.val})
-    self.${id}.set_property('shift_config', ${fft_shift_config.val})
-    self.${id}.set_property('bypass_mode', ${fft_bypass_mode}, typename='bool')
-    self.${id}.set_property('cp_insertion_list', ${fft_cp_insertion_list})
-    self.${id}.set_property('cp_removal_list', ${fft_cp_removal_list})
+    self.${id}.set_length(${fft_length})
+    self.${id}.set_direction(${fft_direction.val})
+    self.${id}.set_magnitude(${fft_magnitude.val})
+    self.${id}.set_shift_config(${fft_shift_config.val})
+    self.${id}.set_bypass_mode(${fft_bypass_mode})
+    self.${id}.set_cp_insertion_list(${fft_cp_insertion_list})
+    self.${id}.set_cp_removal_list(${fft_cp_removal_list})
     if ${version} == 2:
-        self.${id}.set_property('fft_scaling_factor', ${fft_scaling_factor})
+        self.${id}.set_scaling_factor(${fft_scaling_factor})
     else:
-        self.${id}.set_property('fft_scaling', ${fft_scaling})
+        self.${id}.set_scaling(${fft_scaling})
   callbacks:
-    - set_property('length', ${fft_length})
-    - set_property('direction', ${fft_direction.val})
-    - set_property('magnitude', ${fft_magnitude.val})
-    - set_property('fft_scaling', ${fft_scaling})
-    - set_property('fft_scaling_factor', ${fft_scaling_factor})
-    - set_property('shift_config', ${fft_shift_config.val})
-    - set_property('bypass_mode', ${fft_bypass_mode}, typename='bool')
-    - set_property('cp_insertion_list', ${fft_cp_insertion_list})
-    - set_property('cp_removal_list', ${fft_cp_removal_list})
+    - self.${id}.set_length(${fft_length})
+    - self.${id}.set_direction(${fft_direction.val})
+    - self.${id}.set_magnitude(${fft_magnitude.val})
+    - self.${id}.set_scaling(${fft_scaling})
+    - self.${id}.set_scaling_factor(${fft_scaling_factor})
+    - self.${id}.set_shift_config(${fft_shift_config.val})
+    - self.${id}.set_bypass_mode(${fft_bypass_mode})
+    - self.${id}.set_cp_insertion_list(${fft_cp_insertion_list})
+    - self.${id}.set_cp_removal_list(${fft_cp_removal_list})
 
 parameters:
 - id: version
@@ -71,7 +70,7 @@ parameters:
   options: ['REVERSE', 'FORWARD']
   option_labels: ['Reverse', 'Forward']
   option_attributes:
-    val: [0, 1]
+    val: ["uhd.fft_direction.REVERSE", "uhd.fft_direction.FORWARD"]
 - id: fft_magnitude
   label: FFT Magnitude Mode
   dtype: enum
@@ -79,7 +78,7 @@ parameters:
   options: ['COMPLEX', 'MAGNITUDE', 'MAGNITUDE_SQUARED']
   option_labels: ['Complex', 'Magnitude', 'Mag Squared']
   option_attributes:
-    val: [0, 1, 2]
+    val: ["uhd.fft_magnitude.COMPLEX", "uhd.fft_magnitude.MAGNITUDE", "uhd.fft_magnitude.MAGNITUDE_SQUARED"]
 - id: fft_shift_config
   label: FFT Shift Configuration
   dtype: enum
@@ -87,7 +86,7 @@ parameters:
   options: ['NORMAL', 'REVERSE', 'NATURAL', 'BIT_REVERSE']
   option_labels: ['Normal', 'Reverse', 'Natural', 'Bit Reverse']
   option_attributes:
-    val: [0, 1, 2, 3]
+    val: ["uhd.fft_shift.NORMAL", "uhd.fft_shift.REVERSE", "uhd.fft_shift.NATURAL", "uhd.fft_shift.BIT_REVERSE"]
 - id: fft_scaling
   label: FFT Scaling Schedule
   dtype: int
