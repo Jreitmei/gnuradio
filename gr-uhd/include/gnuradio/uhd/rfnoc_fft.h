@@ -16,7 +16,7 @@
 namespace gr {
 namespace uhd {
 
-/*! RFNoC FIR Filter Block
+/*! RFNoC FFT Block
  *
  * \ingroup uhd_blk
  */
@@ -64,8 +64,6 @@ public:
      */
     virtual fft_direction get_direction() const = 0;
 
-
-
     /*! Set the format of the returned FFT output data
      *
      * \param magnitude Format of the returned FFT output data
@@ -90,8 +88,6 @@ public:
      */
     virtual fft_magnitude get_magnitude() const = 0;
 
-
-
     /*! Set the shift configuration of the output FFT data
      *
      * \param shift Configuration for shifting FFT output data
@@ -115,8 +111,6 @@ public:
      * \returns Shift configuration of the output FFT data
      */
     virtual fft_shift get_shift_config() const = 0;
-
-
 
     /*! Set the scaling factor for the FFT block
      *

@@ -84,10 +84,10 @@ parameters:
   label: FFT Shift Configuration
   dtype: enum
   default: 'NORMAL'
-  options: ['NORMAL', 'REVERSE', 'NATURAL']
-  option_labels: ['Normal', 'Reverse', 'Natural']
+  options: ['NORMAL', 'REVERSE', 'NATURAL', 'BIT_REVERSE']
+  option_labels: ['Normal', 'Reverse', 'Natural', 'Bit Reverse']
   option_attributes:
-    val: [0, 1, 2]
+    val: [0, 1, 2, 3]
 - id: fft_scaling
   label: FFT Scaling Schedule
   dtype: int
