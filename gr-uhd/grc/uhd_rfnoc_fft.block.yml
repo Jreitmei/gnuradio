@@ -18,7 +18,7 @@ templates:
     self.${id}.set_bypass_mode(${fft_bypass_mode})
     self.${id}.set_cp_insertion_list(${fft_cp_insertion_list})
     self.${id}.set_cp_removal_list(${fft_cp_removal_list})
-    if ${version} == 2:
+    if "${scaling_version}" == "Scaling Factor":
         self.${id}.set_scaling_factor(${fft_scaling_factor})
     else:
         self.${id}.set_scaling(${fft_scaling})
@@ -34,11 +34,6 @@ templates:
     - self.${id}.set_cp_removal_list(${fft_cp_removal_list})
 
 parameters:
-- id: version
-  label: FFT Block Version
-  dtype: int
-  default: 2
-  hide: ${ 'part' }
 - id: num_chans
   label: Number of Channels
   dtype: int
@@ -87,16 +82,22 @@ parameters:
   option_labels: ['Normal', 'Reverse', 'Natural', 'Bit Reverse']
   option_attributes:
     val: ["uhd.fft_shift.NORMAL", "uhd.fft_shift.REVERSE", "uhd.fft_shift.NATURAL", "uhd.fft_shift.BIT_REVERSE"]
+- id: scaling_version
+  label: Choose FFT Scaling 
+  dtype: enum
+  default: 'Scaling Schedule'
+  options: ['Scaling Schedule', 'Scaling Factor']
+  hide: ${ 'part' }  
 - id: fft_scaling
   label: FFT Scaling Schedule
   dtype: int
-  default: 1706
-  hide: part
+  default: 170
+  hide: ${ 'part' if scaling_version == 'Scaling Schedule' else 'all'}
 - id: fft_scaling_factor
   label: FFT Scaling Factor
   dtype: float
   default: 1.0
-  hide: ${ 'part' if version == 2 else 'all'}
+  hide: ${ 'part' if scaling_version != 'Scaling Schedule' else 'all'}
 - id: fft_bypass_mode
   label: FFT Bypass Mode
   dtype: bool
