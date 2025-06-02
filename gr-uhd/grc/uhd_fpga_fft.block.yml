@@ -28,6 +28,16 @@ parameters:
     dtype: int
     default: 12
     hide: part
+-   id: EN_CP_INSERTION
+    label: Enable Cyclic Prefix Insertion
+    dtype: int
+    default: 1
+    hide: part
+-   id: EN_CP_REMOVAL
+    label: Enable Cyclic Prefix Removal
+    dtype: int
+    default: 1
+    hide: part
 -   id: MAX_CP_LIST_LEN_INS_LOG2
     label: Maximum Cyclic Prefix Insertion List Length (Log2)
     dtype: int
